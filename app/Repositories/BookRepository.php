@@ -20,6 +20,17 @@ class BookRepository extends BaseRepository{
         return $book;
     }
 
+    public function update(array $data, $id){
+        $book = Book::find($id);
+        $book->update($data);
+        $book->save();
+
+        if(isset($data['author_id'])){
+            $book->authors()->sync($data['author_id']);
+        }
+        return $book;
+    }
+
     public function cheapest(){
         $BookList = $this->model->orderBy('price','asc')
             ->limit(3)->get();

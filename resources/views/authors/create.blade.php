@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', 'Książki')
+@section('title', 'Dodaj autora')
 
 @section('content')
 <main class="m-5">
-    <h1>Dodaj książkę</h1>
+    <h1>Dodaj autora</h1>
 
     <x-alert-errors />
 
@@ -25,6 +25,16 @@
         <div class="form-group">
             <label for="">Gatunki</label>
             <input type="text" name="genres" class="form-control" value="{{ old('genres') }}" required>
+        </div>
+        <div class="form-group">
+            <label for="">Książki</label>
+            <select name="book_id[]" class="form-control" multiple>
+                @foreach ($books as $book)
+                    <option value="{{ $book->id }}">
+                        {{ $book->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
 

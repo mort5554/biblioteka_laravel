@@ -41,14 +41,14 @@ class BookController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|min:3|max:1024',
-            'year' => 'required|max:255',
+            'year' => 'required|integer',
             'publication_place' => 'required|string|min:3|max:255',
-            'pages' => 'required',
+            'pages' => 'required|integer',
             'price' => 'required'
         ]);
 
         //Book::create($data);
-        $bookList = $bookRepo->create($data);
+        $bookRepo->create($data);
 
         return redirect()->route('books.index')->with('message', 'Udało się dodać książkę');
     }
@@ -67,17 +67,29 @@ class BookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
+    public function edit(BookRepository $bookRepo, $id)
     {
-        return view('books.edit')->with('book',$book);
+        $book = $bookRepo->find($id);
+        $authors = Author::all();
+        return view('books.edit', 
+        ['book' => $book, 'authors' => $authors]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BookRepository $bookRepo, Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|min:3|max:1024',
+            'year' => 'required|integer|max:255',
+            'publication_place' => 'required|string|min:3|max:255',
+            'pages' => 'required|integer',
+            'price' => 'required'
+        ]);
+
+        $bookList = $bookRepo->update($data, $id);
+        return redirect()->route('books.index', ['message' => 'Udało się edytować notatkę']);
     }
 
     /**
