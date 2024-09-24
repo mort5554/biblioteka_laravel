@@ -80,4 +80,17 @@ class LoanController extends Controller
     {
         //
     }
+
+    public function search(Request $request){
+        $q = $request->input('q', "");
+
+        $loansList = Loan::whereHas('book', function($query) use ($q){
+            $query->where('name', 'like', "%".$q."%");
+        })->orWhere('client', 'like', "%".$q."%")
+            ->with('book')
+            ->paginate(10);
+
+
+        return view('loans.index')->with('loansList', $loansList);
+    }
 }

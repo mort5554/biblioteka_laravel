@@ -33,7 +33,9 @@ class BookRepository extends BaseRepository{
     }
 
     public function search(String $q){
-        $BookList = $this->model->where('name', 'like', '%'.$q.'%')->get();
+        $BookList = $this->model
+            ->where('name', 'like', '%'.$q.'%')
+            ->paginate(10);
         return $BookList;
     }
 }

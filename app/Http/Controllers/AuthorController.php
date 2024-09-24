@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Author;
 use App\Repositories\BookRepository;
+use DB;
 
 class AuthorController extends Controller
 {
@@ -83,5 +84,16 @@ class AuthorController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request){
+        $q = $request->input('q', "");
+
+        $authorList = Author::where('firstname', 'like', "%" . $q . "%")
+            ->orWhere('lastname', 'like', "%" . $q . "%")
+            ->paginate(10);
+
+
+        return view('authors.index')->with('authorList', $authorList);
     }
 }

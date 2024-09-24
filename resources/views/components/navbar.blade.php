@@ -36,12 +36,31 @@
             @endif
 
         </ul>
-        <form action="{{ route('books.search') }}" method="GET" class="d-flex" role="search">
-            @csrf
-            @method('GET')
-            <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        @if (request()->is('books*'))
+            <form action="{{ route('books.search') }}" method="GET" class="d-flex" role="search">
+                @csrf
+                @method('GET')
+                <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            
+        @elseif(request()->is('loans*'))
+            <form action="{{ route('loans.search') }}" method="GET" class="d-flex" role="search">
+                @csrf
+                @method('GET')
+                <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+        @elseif(request()->is('authors*'))
+            <form action="{{ route('authors.search') }}" method="GET" class="d-flex" role="search">
+                @csrf
+                @method('GET')
+                <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+        @endif
       </div>
     </div>
 </nav>

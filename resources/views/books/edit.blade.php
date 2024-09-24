@@ -5,15 +5,9 @@
 @section('content')
 <main class="m-5">
     <h1>Dodaj książkę</h1>
-    @if($errors->all())
-        <div class="alert alert-danger" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
+    <x-alert-errors />
+
     <table class="table mt-5">
         <thead>
             <th>Nazwa</th>
