@@ -4,11 +4,13 @@
 
 @section('content')
 <main class="m-5">
+
     @session('message')
         <div class="alert alert-info m-3 text-center" role="alert">
             {{ session('message') }}
         </div>
     @endsession
+
     <table class="table">
         <thead>
             <th>Imię</th>

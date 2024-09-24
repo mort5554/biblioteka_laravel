@@ -26,7 +26,7 @@
                 <td>{{ $loan->estimated_on }}</td>
                 <td>{{ $loan->returned_on }}</td>
                 <td>
-                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">
+                    <a href="{{ route('books.show', $loan->id) }}" class="btn btn-primary">
                         Pokaż
                     </a>
                 </td>

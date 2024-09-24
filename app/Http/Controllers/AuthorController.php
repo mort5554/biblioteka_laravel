@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Author;
+use App\Repositories\BookRepository;
 
 class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(BookRepository $bookRepo, Author $author)
     {
         $authorList = Author::all();
 
+        if ($authorList->isEmpty()) {
+            return redirect()->route('authors.index')->with('message', 'Brak autorów w bazie danych.');
+        }
+
+        //return view('authors.index')->with('authorList', $authorList);
+        //$authorList = $bookRepo->getAll();
         return view('authors.index')->with('authorList', $authorList);
     }
 
@@ -22,7 +29,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -30,16 +37,27 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'firstname' => 'required|string|min:3|max:255',
+            'lastname' => 'required|string|min:3|max:255',
+            'birthday' => 'required|date_format:Y-m-d',
+            'genres' => 'required|string|max:255',
+        ]);
+
+        Author::create($data);
+
+        return redirect()->route('authors.index')->with('message', 'Udało się dodać autora');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(BookRepository $bookRepo,$id)
     {
         $author = Author::findOrFail($id);
+        //return view('authors.show')->with('author', $author);
 
+        //$author = $bookRepo->find($id);
         return view('authors.show')->with('author', $author);
     }
 

@@ -23,13 +23,13 @@
                 </li>
             @elseif(request()->is('loans*'))
                 <li class="nav-item">
-                    <a class="nav-link active mx-3" aria-current="page" href="{{ route('books.create') }}">
+                    <a class="nav-link active mx-3" aria-current="page" href="{{ route('loans.create') }}">
                         Dodaj wypożyczenie
                     </a>
                 </li>
             @elseif(request()->is('authors*'))
                 <li class="nav-item">
-                    <a class="nav-link active mx-3" aria-current="page" href="{{ route('books.create') }}">
+                    <a class="nav-link active mx-3" aria-current="page" href="{{ route('authors.create') }}">
                         Dodaj autora
                     </a>
                 </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Isbn;
+use App\Models\Author;
 use DB;
 use App\Repositories\BookRepository;
 
@@ -20,16 +21,17 @@ class BookController extends Controller
         /*$bookList = Book::all();
         return view('books.index')->with('bookList', $bookList);*/
 
-        $bookList = $bookRepo->getall();
+        $bookList = $bookRepo->getAll();
         return view('books.index')->with('bookList', $bookList);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(BookRepository $bookRepo)
     {
-        return view('books.create');
+        $authors = Author::all();
+        return view('books.create',['authors' => $authors]);
     }
 
     /**

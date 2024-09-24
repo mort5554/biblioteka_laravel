@@ -11,6 +11,15 @@ class BookRepository extends BaseRepository{
         $this->model = $model;
     }
 
+    public function create(array $data){
+        $book = Book::create($data);
+
+        if(isset($data['author_id'])){
+            $book->authors()->sync($data['author_id']);
+        }
+        return $book;
+    }
+
     public function cheapest(){
         $BookList = $this->model->orderBy('price','asc')
             ->limit(3)->get();
