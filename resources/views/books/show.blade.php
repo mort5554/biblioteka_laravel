@@ -61,6 +61,43 @@
             </tr>
         @endisset
     </table>
+
+    <h2 class="mt-5 mb-2">Znalezione pozycje z Open Library</h2>
+    @isset($ol)
+        <table class="table">
+        @foreach ($ol->docs as $doc)
+            <tr>
+                <td>Tytuł</td>
+                <td>{{ $doc->title }}</td>
+            </tr>
+
+            @isset($doc->author_name)
+                <tr>
+                    <td>Autor</td>
+                    <td>{{ $doc->author_name[0] }}</td>
+                </tr>
+            @endisset
+
+            @isset($doc->first_publish_year)
+                <tr>
+                    <td>Data pierwszego wydania</td>
+                <td>{{ $doc->first_publish_year }}</td>
+                </tr>
+            @endisset
+
+            @isset($doc->publisher)
+                <tr>
+                    <td>Wydawca</td>
+                    <td>{{ $doc->publisher[0] }}</td>
+                </tr>
+            @endisset
+                <tr>
+                    <td colspan="2" style="background-color: lightgray"></td>
+                </tr>
+        @endforeach
+        </table>
+
+    @endisset
 </main>
 
 

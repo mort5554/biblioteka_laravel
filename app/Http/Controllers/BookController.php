@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBook;
 use Illuminate\Http\Request;
 use App\Models\Book;
-use App\Models\Isbn;
+use App\Providers\OpenLibraryProvider;
 use App\Models\Author;
-use DB;
 use App\Repositories\BookRepository;
 
 
@@ -52,12 +51,15 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BookRepository $bookRepo, $id)
+    public function show(OpenLibraryProvider $ol, BookRepository $bookRepo, $id)
     {
         //$book = Book::findOrFail($id);
         $book = $bookRepo->find($id);
+        $openLibraryData = $ol->search($book->name);
 
-        return view('books.show')->with('book', $book);
+        return view('books.show', [
+            'book' => $book, 'ol' => json_decode($openLibraryData),
+        ]);
     }
 
     /**
