@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBook;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Isbn;
@@ -37,15 +38,9 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BookRepository $bookRepo, Request $request)
+    public function store(BookRepository $bookRepo, StoreBook $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|min:3|max:1024',
-            'year' => 'required|integer',
-            'publication_place' => 'required|string|min:3|max:255',
-            'pages' => 'required|integer',
-            'price' => 'required'
-        ]);
+        $data = $request->all();
 
         //Book::create($data);
         $bookRepo->create($data);
@@ -71,24 +66,18 @@ class BookController extends Controller
     {
         $book = $bookRepo->find($id);
         $authors = Author::all();
-        return view('books.edit', 
+        return view('books.edit',
         ['book' => $book, 'authors' => $authors]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookRepository $bookRepo, Request $request, $id)
+    public function update(BookRepository $bookRepo, StoreBook $request, $id)
     {
-        $data = $request->validate([
-            'name' => 'required|string|min:3|max:1024',
-            'year' => 'required|integer|max:255',
-            'publication_place' => 'required|string|min:3|max:255',
-            'pages' => 'required|integer',
-            'price' => 'required'
-        ]);
+        $data = $request->all();
 
-        $bookList = $bookRepo->update($data, $id);
+        $bookRepo->update($data, $id);
         return redirect()->route('books.index', ['message' => 'Udało się edytować notatkę']);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAuthor;
 use App\Models\Author;
 use App\Models\Book;
 use App\Repositories\BookRepository;
@@ -38,16 +39,9 @@ class AuthorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAuthor $request)
     {
-        $validatedData = $request->validate([
-            'firstname' => 'required|string|min:3|max:255',
-            'lastname' => 'required|string|min:3|max:255',
-            'birthday' => 'required|date_format:Y-m-d',
-            'genres' => 'required|string|max:255',
-            'book_id' => 'nullable|array',
-            'book_id.*' => 'exists:books,id',
-        ]);
+        $validatedData = $request->all();
 
         $author = Author::create([
             'firstname' => $validatedData['firstname'],

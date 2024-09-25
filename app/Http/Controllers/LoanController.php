@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreLoan;
 use App\Models\Loan;
 use App\Models\Book;
 use Carbon\Carbon;
@@ -33,15 +34,10 @@ class LoanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLoan $request)
 {
     // Walidacja danych (opcjonalnie warto dodać)
-    $validatedData = $request->validate([
-        'book_id' => 'required|exists:books,id',
-        'client' => 'required|string|max:255|min:3',
-        'loaned_on' => 'required|date',
-        'estimated_on' => 'required|date|after_or_equal:loaned_on',
-    ]);
+    $validatedData = $request->all();
 
     // Tworzenie nowego rekordu Loan
     Loan::create($validatedData);
