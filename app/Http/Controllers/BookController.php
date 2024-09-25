@@ -31,6 +31,7 @@ class BookController extends Controller
      */
     public function create(BookRepository $bookRepo)
     {
+        \App::setLocale(session('locale'));
         $authors = Author::all();
         return view('books.create',['authors' => $authors]);
     }

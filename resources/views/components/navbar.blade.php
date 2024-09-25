@@ -43,7 +43,7 @@
                 <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            
+
         @elseif(request()->is('loans*'))
             <form action="{{ route('loans.search') }}" method="GET" class="d-flex" role="search">
                 @csrf
@@ -61,6 +61,25 @@
             </form>
 
         @endif
+
+        <div class="dropdown ms-5">
+            <a class="btn dropdown-toggle nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Język
+            </a>
+
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ URL::to('language/pl') }}">
+                        Polski
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ URL::to('language/en') }}">
+                        Angielski
+                    </a>
+                </li>
+            </ul>
+          </div>
       </div>
     </div>
 </nav>

@@ -24,3 +24,8 @@ Route::resource('books', BookController::class);
 Route::resource('loans',LoanController::class);
 
 Route::resource('authors', AuthorController::class);
+
+Route::get('language/{locale}', function($locale){
+    session(['locale' => $locale]);
+    return redirect()->back();
+})->name('language');
